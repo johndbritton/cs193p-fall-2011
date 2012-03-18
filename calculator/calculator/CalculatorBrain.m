@@ -57,6 +57,8 @@
         result = sqrt([self popOperand]);  
     } else if ([operation isEqualToString:@"π"]) {
         result = M_PI;
+    } else if ([operation isEqualToString:@"±"]) {
+        result = [self popOperand]*-1;
     }
     
     [self pushOperand:result];

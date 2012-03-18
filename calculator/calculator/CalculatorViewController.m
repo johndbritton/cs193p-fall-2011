@@ -72,7 +72,12 @@
 
 - (IBAction)operationPressed:(UIButton *)sender {
     if (self.userIsInTheMiddleOfEnteringANumber) {
-        [self enterPressed];
+        if ([sender.currentTitle isEqualToString:@"±"]) {
+            self.display.text = [NSString stringWithFormat:@"%g", ([self.display.text doubleValue] * -1)];
+            return;
+        } else {
+            [self enterPressed];
+        }
     }
     double result = [self.brain performOperation:sender.currentTitle];
     self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", sender.currentTitle]];
