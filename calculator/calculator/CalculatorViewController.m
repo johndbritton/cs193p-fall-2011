@@ -52,6 +52,14 @@
     self.userIsEnteringDigitsAfterDecimalPoint = NO;
 }
 
+- (IBAction)clearPressed {
+    [self.brain clear];
+    self.display.text = @"0";
+    self.programDisplay.text = @"";	
+    self.userIsInTheMiddleOfEnteringANumber = NO;
+    self.userIsEnteringDigitsAfterDecimalPoint = NO;
+}
+
 - (IBAction)operationPressed:(UIButton *)sender {
     if (self.userIsInTheMiddleOfEnteringANumber) {
         [self enterPressed];
@@ -59,9 +67,5 @@
     double result = [self.brain performOperation:sender.currentTitle];
     self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", sender.currentTitle]];
     self.display.text = [NSString stringWithFormat:@"%g", result];
-}
-- (void)viewDidUnload {
-    [self setProgramDisplay:nil];
-    [super viewDidUnload];
 }
 @end
