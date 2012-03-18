@@ -76,6 +76,7 @@
     }
     double result = [self.brain performOperation:sender.currentTitle];
     self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", sender.currentTitle]];
+    self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"= "]];
     self.display.text = [NSString stringWithFormat:@"%g", result];
 }
 @end
