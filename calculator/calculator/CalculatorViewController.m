@@ -18,6 +18,7 @@
 @implementation CalculatorViewController
 
 @synthesize display = _display;
+@synthesize programDisplay = _programDisplay;
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize userIsEnteringDigitsAfterDecimalPoint = _userIsEnteringDigitsAfterDecimalPoint;
 @synthesize brain = _brain;
@@ -46,6 +47,7 @@
 
 - (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
+    self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", self.display.text]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.userIsEnteringDigitsAfterDecimalPoint = NO;
 }
@@ -55,6 +57,11 @@
         [self enterPressed];
     }
     double result = [self.brain performOperation:sender.currentTitle];
+    self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", sender.currentTitle]];
     self.display.text = [NSString stringWithFormat:@"%g", result];
+}
+- (void)viewDidUnload {
+    [self setProgramDisplay:nil];
+    [super viewDidUnload];
 }
 @end
