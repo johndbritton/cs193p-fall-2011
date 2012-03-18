@@ -11,7 +11,6 @@
 
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
-@property (nonatomic) BOOL userIsEnteringDigitsAfterDecimalPoint;
 @property (nonatomic, strong) CalculatorBrain *brain;
 @end
 
@@ -20,7 +19,6 @@
 @synthesize display = _display;
 @synthesize programDisplay = _programDisplay;
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
-@synthesize userIsEnteringDigitsAfterDecimalPoint = _userIsEnteringDigitsAfterDecimalPoint;
 @synthesize brain = _brain;
 
 - (CalculatorBrain *)brain {
@@ -38,10 +36,10 @@
 }
 
 - (IBAction)decimalPointPressed:(id)sender {
-    if(!self.userIsEnteringDigitsAfterDecimalPoint){
+    NSRange rangeOfDecimalPoint = [self.display.text rangeOfString:@"."];
+    if (rangeOfDecimalPoint.location == NSNotFound) {
         [self digitPressed:sender];
-        self.userIsEnteringDigitsAfterDecimalPoint = YES;
-        self.userIsInTheMiddleOfEnteringANumber = YES;
+        self.userIsInTheMiddleOfEnteringANumber = YES;        
     }
 }
 
@@ -49,7 +47,6 @@
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.programDisplay.text = [self.programDisplay.text stringByAppendingString:[NSString stringWithFormat:@"%@ ", self.display.text]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
-    self.userIsEnteringDigitsAfterDecimalPoint = NO;
 }
 
 - (IBAction)clearPressed {
@@ -57,7 +54,6 @@
     self.display.text = @"0";
     self.programDisplay.text = @"";	
     self.userIsInTheMiddleOfEnteringANumber = NO;
-    self.userIsEnteringDigitsAfterDecimalPoint = NO;
 }
 
 - (IBAction)backspacePressed {
