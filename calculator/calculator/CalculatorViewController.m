@@ -60,6 +60,20 @@
     self.userIsEnteringDigitsAfterDecimalPoint = NO;
 }
 
+- (IBAction)backspacePressed {
+    if (self.userIsInTheMiddleOfEnteringANumber) {
+        int displayLength = [self.display.text length];
+        if (displayLength > 1) {
+            NSRange range = {0, displayLength-1};
+            self.display.text = [self.display.text substringWithRange:range];
+        } else if (displayLength == 1) {
+            self.display.text = @"0";
+            self.userIsInTheMiddleOfEnteringANumber = NO;
+        }
+    }
+
+}
+
 - (IBAction)operationPressed:(UIButton *)sender {
     if (self.userIsInTheMiddleOfEnteringANumber) {
         [self enterPressed];
